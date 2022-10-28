@@ -4,6 +4,11 @@ Provides detailed information about the various cryptocurrencies.
 A list of the top 100 cryptocurrencies.
 Latest Crypto News.
 
+![1](https://user-images.githubusercontent.com/76736466/198633976-1bb794f1-f283-4484-8133-39558fb44ddb.PNG)
+![2](https://user-images.githubusercontent.com/76736466/198634150-10be3fc8-d091-4252-8e49-88a95d55a6b3.PNG)
+![3](https://user-images.githubusercontent.com/76736466/198634219-49a02b04-560e-407e-b9a8-23e2150ac995.PNG)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
