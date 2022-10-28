@@ -1,3 +1,9 @@
+
+Cryptoverse is an open-source project.
+Provides detailed information about the various cryptocurrencies.
+A list of the top 100 cryptocurrencies.
+Latest Crypto News.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
