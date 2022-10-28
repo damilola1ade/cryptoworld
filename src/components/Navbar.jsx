@@ -48,8 +48,8 @@ const Navbar = () => {
             <Menu.Item key={"cryptocurr"} icon={<FundOutlined />}>
               <Link to={"/cryptocurrencies"}>Cryptocurrencies</Link>
             </Menu.Item>
-            <Menu.Item key={"exchan"} icon={<MoneyCollectOutlined />}>
-              <Link to={"/exchanges"}>Exchanges</Link>
+            <Menu.Item icon={<MoneyCollectOutlined />}>
+              <a href ='https://mykryptlive.netlify.app/' target='blank'>MyKrypt</a>
             </Menu.Item>
             <Menu.Item key={"new"} icon={<BulbOutlined />}>
               <Link to={"/news"}>News</Link>
