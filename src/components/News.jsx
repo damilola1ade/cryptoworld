@@ -1,80 +1,103 @@
-import React, {useState} from 'react'
-import { Select, Typography, Row, Col, Avatar, Card } from 'antd';
-import moment from 'moment';
-import { Link } from 'react-router-dom'
+import React, { useState } from "react";
+import { Select, Typography, Row, Col, Avatar, Card } from "antd";
+import moment from "moment";
+
 import { useGetCryptoNewsQuery } from "../services/cryptoNewsApi";
 import { useGetCryptosQuery } from "../services/cryptoApi";
-import Loader  from './Loader';
 
+import Loader from "./Loader";
+
+
+// Typography and Select
 const { Text, Title } = Typography;
-const{ Option } = Select;
+const { Option } = Select;
 
+// News
 const News = ({ simplified }) => {
-  const count = simplified ? 6 : 12;
-  const [newsCategory, setNewsCategory] = useState("cryptocurrency");
-  const { data: cryptosList } = useGetCryptosQuery(100);
-  const { data: CryptoNews } = useGetCryptoNewsQuery({
-    newsCategory: newsCategory,
-    count: count,
+  const [newsCategory, setNewsCategory] = useState("Cryptocurrency");
+
+  // fetch crypto news
+  const { data: cryptoNews } = useGetCryptoNewsQuery({
+    newsCategory,
+    count: simplified ? 6 : 12,
   });
 
-  if (!CryptoNews?.value) return <Loader />;
+  // get 100 cryptocurrencies
+  const { data } = useGetCryptosQuery(100);
+
+  // Loading
+  if (!cryptoNews?.value) return <Loader />;
 
   return (
     <Row gutter={[24, 24]}>
+      {/* Select a Crypto */}
       {!simplified && (
         <Col span={24}>
           <Select
             showSearch
             className="select-news"
-            placeholder="Select crypto"
+            placeholder="Select a Crypto"
             optionFilterProp="children"
             onChange={(value) => setNewsCategory(value)}
-            filterOption={(input: any, option: any) =>
+            filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
           >
             <Option value="Cryptocurrency">Cryptocurrency</Option>
-            {cryptosList?.data?.coins.map((coin: any) => (
-              <Option key={coin.name} value={coin.name}>
+            {/* Cryptocurrencies */}
+            {data?.data?.coins.map((coin, i) => (
+              <Option value={coin.name} key={i}>
                 {coin.name}
               </Option>
             ))}
           </Select>
         </Col>
       )}
-      {CryptoNews?.value.map((news: any, index: number) => (
-        <Col xs={24} sm={12} lg={8} key={index}>
+
+      {/* Crypto News */}
+      {cryptoNews.value.map((news, i) => (
+        <Col xs={24} sm={12} lg={8} key={i}>
           <Card hoverable className="news-card">
-            <Link to={news.url} target="_blank" rel="noreferrer">
+            <a href={news.url} target="_blank" rel="noreferrer">
               <div className="news-image-container">
+                {/* News Name */}
                 <Title className="news-title" level={4}>
                   {news.name}
                 </Title>
-                <img src={news?.image ? news?.image?.thumbnail?.contentUrl : "error" } alt="News Image" />
+                {/* News Thumbnail */}
+                <img
+                  src={news?.image?.thumbnail?.contentUrl }
+                  alt={news.name}
+                  style={{ maxWidth: "200px", maxHeight: "100px" }}
+                />
               </div>
+              {/* News Description */}
               <p>
-                {news?.description > 100
+                {news.description > 100
                   ? `${news.description.substring(0, 100)}...`
                   : news.description}
               </p>
+              {/* News Provider Info */}
               <div className="provider-container">
                 <div>
+                  {/* Provider Avatar */}
                   <Avatar
                     src={
-                      news.provider[0]?.image?.thumbnail?.contentUrl || "error"
+                      news.provider[0]?.image?.thumbnail?.contentUrl 
                     }
-                    alt="news"
+                    alt={news.provider[0]?.name}
                   />
+                  {/* Provider Name */}
                   <Text className="provider-name">
-                    {news?.provider[0]?.name}
+                    {news.provider[0]?.name}
                   </Text>
                 </div>
+                {/* Date Published */}
                 <Text>
-                  {moment(news?.datePublished).startOf("hour").fromNow()}
+                  {moment(news.datePublished).startOf("ss").fromNow()}
                 </Text>
               </div>
-            </Link>
+            </a>
           </Card>
         </Col>
       ))}
